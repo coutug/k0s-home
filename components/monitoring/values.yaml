@@ -21,9 +21,8 @@ defaultDashboards:
 
 vmsingle:
   spec:
-    replicationFactor: 1
+    replicaCount: 1
     retentionPeriod: 7d
-    # storage:
 
 vmagent:
   spec:
