@@ -1,0 +1,7 @@
+age_keys: &age_keys
+  - "age1ktfsdqtzs3c84krtw62rjumqhf4fvf8acqauv5x6cr883wgj53sq5df9y6" # local
+  - "age1elts5hx6rdscusvp45fdu6zzf06rmccynty97t05aeegtfcgl40sq7esuh" # k0s-home
+
+creation_rules:
+  - path_regex: .*.(yaml|yml|json|env)$
+    age: *age_keys

@@ -8,6 +8,10 @@ spec:
   sourceRef:
     kind: GitRepository
     name: k0s-home
+  decryption:
+    provider: sops
+    secretRef:
+      name: sops-age
   path: components/monitoring
   prune: true
   timeout: 10m

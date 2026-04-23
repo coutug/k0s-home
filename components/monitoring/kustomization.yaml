@@ -11,5 +11,12 @@ configMapGenerator:
     files:
       - values.yaml
 
+secretGenerator:
+  - name: grafana-admin
+    envs:
+      - grafana.env
+    options:
+      disableNameSuffixHash: true
+
 configurations:
   - kustomizeconfig.yaml

@@ -22,8 +22,7 @@ defaultDashboards:
 vmsingle:
   spec:
     replicationFactor: 1
-    retentionPeriod: "7d"
-    minScrapeInterval: 15s
+    retentionPeriod: 7d
     # storage:
 
 vmagent:
