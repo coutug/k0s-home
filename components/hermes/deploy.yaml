@@ -1,0 +1,66 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hermes
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: hermes
+  template:
+    metadata:
+      labels:
+        app: hermes
+    spec:
+      containers:
+        - name: gateway
+          image: nousresearch/hermes-agent:latest
+          imagePullPolicy: IfNotPresent
+          args:
+            - gateway
+            - run
+          envFrom:
+            - secretRef:
+                name: hermes-env
+          ports:
+            - name: gateway
+              containerPort: 8642
+          resources:
+            requests:
+              cpu: 500m
+              memory: 1Gi
+            limits:
+              cpu: "2"
+              memory: 4Gi
+          volumeMounts:
+            - name: data
+              mountPath: /opt/data
+        - name: dashboard
+          image: nousresearch/hermes-agent:latest
+          imagePullPolicy: IfNotPresent
+          args:
+            - dashboard
+            - --host
+            - 0.0.0.0
+          envFrom:
+            - secretRef:
+                name: hermes-env
+          env:
+            - name: GATEWAY_HEALTH_URL
+              value: http://127.0.0.1:8642
+          ports:
+            - name: dashboard
+              containerPort: 9119
+          resources:
+            requests:
+              cpu: 100m
+              memory: 256Mi
+            limits:
+              cpu: 500m
+              memory: 512Mi
+          volumeMounts:
+            - name: data
+              mountPath: /opt/data
+      volumes:
+        - name: data
+          emptyDir: {}

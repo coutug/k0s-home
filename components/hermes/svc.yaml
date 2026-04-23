@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: hermes
+spec:
+  type: ClusterIP
+  selector:
+    app: hermes
+  ports:
+    - name: gateway
+      port: 8642
+      targetPort: gateway
+    - name: dashboard
+      port: 9119
+      targetPort: dashboard

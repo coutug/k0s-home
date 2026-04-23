@@ -1,0 +1,14 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: hermes
+
+resources:
+  - ns.yaml
+  - deploy.yaml
+  - svc.yaml
+
+secretGenerator:
+  - name: hermes-env
+    envs:
+      - hermes.env
