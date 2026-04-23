@@ -27,6 +27,7 @@ spec:
     domain: "cluster.local"
   sync:
     kind: GitRepository
+    name: k0s-home
     url: https://github.com/coutug/k0s-home.git
     ref: refs/heads/main
     path: deploy

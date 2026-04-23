@@ -1,0 +1,56 @@
+global:
+  cluster:
+    dnsDomain: cluster.local
+
+victoria-metrics-operator:
+  replicaCount: 1
+  enabled: true
+  serviceMonitor:
+    enabled: true
+  operator:
+    enable_converter_ownership: true
+  extraArgs:
+    client.qps: 20
+    client.burst: 40
+
+defaultDashboards:
+  enabled: true
+  defaultTimezone: utc
+  annotations:
+    grafana_folder: "Kubernetes - Vmks"
+
+vmsingle:
+  spec:
+    replicationFactor: 1
+    retentionPeriod: "7d"
+    minScrapeInterval: 15s
+    # storage:
+
+vmagent:
+  spec:
+    replicaCount: 1
+    scrapeInterval: 15s
+    minScrapeInterval: 15s
+  serviceMonitor:
+    enabled: true
+
+grafana:
+  replicas: 1
+  admin:
+    existingSecret: grafana-admin
+  grafana.ini:
+    log:
+      level: info
+  sidecar:
+    dashboards:
+      enabled: true
+      label: grafana_dashboard
+      labelValue: "1"
+      folderAnnotation: grafana_folder
+      searchNamespace: ALL
+      provider:
+        foldersFromFilesStructure: true
+
+# replaced by Cilium
+kubeProxy:
+  enabled: false
