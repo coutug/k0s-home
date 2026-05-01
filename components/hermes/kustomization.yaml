@@ -5,6 +5,7 @@ namespace: hermes
 
 resources:
   - ns.yaml
+  - pvc.yaml
   - deploy.yaml
   - svc.yaml
 

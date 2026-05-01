@@ -63,4 +63,5 @@ spec:
               mountPath: /opt/data
       volumes:
         - name: data
-          emptyDir: {}
+          persistentVolumeClaim:
+            claimName: hermes-data
