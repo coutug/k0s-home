@@ -40,6 +40,7 @@ spec:
           imagePullPolicy: IfNotPresent
           args:
             - dashboard
+            - --insecure
             - --host
             - 0.0.0.0
           envFrom:
