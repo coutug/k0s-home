@@ -1,0 +1,24 @@
+storageClassConfigs:
+  local-path-ext:
+    storageClass:
+      create: true
+      defaultClass: true
+      defaultVolumeType: hostPath
+      reclaimPolicy: Delete
+      volumeBindingMode: WaitForFirstConsumer
+    nodePathMap:
+      - node: DEFAULT_PATH_FOR_NON_LISTED_NODES
+        paths:
+          - /data-ext/local-path
+
+  local-path-root:
+    storageClass:
+      create: true
+      defaultClass: false
+      defaultVolumeType: hostPath
+      reclaimPolicy: Delete
+      volumeBindingMode: WaitForFirstConsumer
+    nodePathMap:
+      - node: DEFAULT_PATH_FOR_NON_LISTED_NODES
+        paths:
+          - /data-root/local-path
