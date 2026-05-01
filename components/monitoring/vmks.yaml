@@ -28,17 +28,6 @@ spec:
     crds: CreateReplace
   driftDetection:
     mode: enabled
-  postRenderers:
-    - kustomize:
-        patches:
-          - target:
-              group: operator.victoriametrics.com
-              version: v1beta1
-              kind: VMSingle
-              name: vmks-victoria-metrics-k8s-stack
-            patch: |
-              - op: remove
-                path: /spec/storage
   valuesFrom:
     - kind: ConfigMap
       name: values-vmks

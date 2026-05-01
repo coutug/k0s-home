@@ -23,6 +23,13 @@ vmsingle:
   spec:
     replicaCount: 1
     retentionPeriod: 7d
+    storage:
+      storageClassName: local-path-root
+      accessModes:
+        - ReadWriteOnce
+      resources:
+        requests:
+          storage: 20Gi
 
 vmagent:
   spec:
