@@ -55,7 +55,10 @@ grafana:
       searchNamespace: ALL
       provider:
         foldersFromFilesStructure: true
-
+  persistence:
+    enabled: true
+    storageClassName: local-path-root
+    size: 10Gi
 # replaced by Cilium
 kubeProxy:
   enabled: false
