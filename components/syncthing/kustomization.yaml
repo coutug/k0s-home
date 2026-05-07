@@ -5,6 +5,7 @@ namespace: syncthing
 
 resources:
   - ns.yaml
+  - networkpolicy.yaml
   # - pvc.yaml
   # - deployment.yaml
   # - service.yaml
