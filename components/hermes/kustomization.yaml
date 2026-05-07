@@ -8,7 +8,6 @@ resources:
   - pvc.yaml
   - deploy.yaml
   - svc.yaml
-  - networkpolicy.yaml
 
 secretGenerator:
   - name: hermes-env
