@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: syncthing
-          image: syncthing/syncthing:latest
+          image: linuxserver/syncthing:2.1.0
           imagePullPolicy: IfNotPresent
           env:
             - name: PUID
@@ -44,7 +44,24 @@ spec:
           volumeMounts:
             - name: data
               mountPath: /var/syncthing
+        - name: syncthing-configd
+          image: ghcr.io/kastelo/syncthing-configd:latest
+          imagePullPolicy: IfNotPresent
+          resources:
+            requests:
+              cpu: 25m
+              memory: 64Mi
+            limits:
+              cpu: 200m
+              memory: 256Mi
+          volumeMounts:
+            - name: configd-config
+              mountPath: /etc/syncthing-configd
+              readOnly: true
       volumes:
         - name: data
           persistentVolumeClaim:
             claimName: syncthing-data
+        - name: configd-config
+          secret:
+            secretName: syncthing-configd

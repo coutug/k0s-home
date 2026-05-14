@@ -12,6 +12,7 @@ spec:
       labels:
         app: hermes
     spec:
+      automountServiceAccountToken: false
       containers:
         - name: gateway
           image: nousresearch/hermes-agent:latest

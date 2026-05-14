@@ -8,3 +8,8 @@ resources:
   # - pvc.yaml
   # - deployment.yaml
   # - service.yaml
+
+# secretGenerator:
+#   - name: syncthing-configd
+#     files:
+#       - ./configd.conf

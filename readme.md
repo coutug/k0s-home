@@ -8,7 +8,7 @@ Configurations for home k0s cluster. `cluster/` folder contains 2 files deployed
 
 # Next
 - syncthing    ----- sync data folders (obsidian, docs, images, musique)
-- borg         ----- backups
-- headscale    ----- vpn
+- borgmatic    `----- backups
+- tailscale    ----- vpn
 - vaultwarden  ----- password management
 - Jellyfin     ----- streaming videos
