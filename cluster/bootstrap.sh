@@ -1,3 +1,4 @@
+# Deploys sops-secret, flux-operator and flux-instance
 #!/usr/bin/env bash
 set -Eeuo pipefail
 
