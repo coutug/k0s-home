@@ -5,9 +5,9 @@ namespace: syncthing
 
 resources:
   - ns.yaml
-  # - pvc.yaml
-  # - deployment.yaml
-  # - service.yaml
+  - pvc.yaml
+  - deployment.yaml
+  - service.yaml
 
 # secretGenerator:
 #   - name: syncthing-configd

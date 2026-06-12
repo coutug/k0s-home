@@ -44,20 +44,20 @@ spec:
           volumeMounts:
             - name: data
               mountPath: /var/syncthing
-        - name: syncthing-configd
-          image: ghcr.io/kastelo/syncthing-configd:latest
-          imagePullPolicy: IfNotPresent
-          resources:
-            requests:
-              cpu: 25m
-              memory: 64Mi
-            limits:
-              cpu: 200m
-              memory: 256Mi
-          volumeMounts:
-            - name: configd-config
-              mountPath: /etc/syncthing-configd
-              readOnly: true
+        # - name: syncthing-configd
+        #   image: ghcr.io/kastelo/syncthing-configd:latest
+        #   imagePullPolicy: IfNotPresent
+        #   resources:
+        #     requests:
+        #       cpu: 25m
+        #       memory: 64Mi
+        #     limits:
+        #       cpu: 200m
+        #       memory: 256Mi
+        #   volumeMounts:
+        #     - name: configd-config
+        #       mountPath: /etc/syncthing-configd
+        #       readOnly: true
       volumes:
         - name: data
           persistentVolumeClaim:
