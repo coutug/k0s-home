@@ -67,5 +67,5 @@ helm upgrade --install "${RELEASE_NAME}" "${CHART}" \
   --timeout 5m \
   --values "${VALUES_FILE}"
 
-kubectl apply --namespace "${NAMESPACE}" --filename "${SOPS_SECRET_FILE}"
+sops --decrypt "${SOPS_SECRET_FILE}" | kubectl apply --namespace "${NAMESPACE}" --filename -
 kubectl apply --namespace "${NAMESPACE}" --filename "${FLUX_INSTANCE_FILE}"
