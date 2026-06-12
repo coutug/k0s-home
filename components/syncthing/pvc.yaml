@@ -9,3 +9,15 @@ spec:
   resources:
     requests:
       storage: 100Gi
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: syncthing-config
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: local-path-root
+  resources:
+    requests:
+      storage: 2Gi
