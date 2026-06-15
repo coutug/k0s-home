@@ -4,6 +4,8 @@ metadata:
   name: syncthing
 spec:
   replicas: 1
+  strategy:
+    type: Recreate
   selector:
     matchLabels:
       app: syncthing
@@ -42,31 +44,14 @@ spec:
               cpu: "1"
               memory: 1Gi
           volumeMounts:
-            - name: syncthing-config
+            - name: config
               mountPath: /config
             - name: data
-              mountPath: /var/syncthing
-        - name: syncthing-configd
-          image: ghcr.io/kastelo/syncthing-configd:1.2.2
-          imagePullPolicy: IfNotPresent
-          resources:
-            requests:
-              cpu: 25m
-              memory: 64Mi
-            limits:
-              cpu: 200m
-              memory: 256Mi
-          volumeMounts:
-            - name: configd-config
-              mountPath: /etc/syncthing-configd
-              readOnly: true
+              mountPath: /var/syncthing/data
       volumes:
-        - name: syncthing-config
+        - name: config
           persistentVolumeClaim:
-            claimName: syncthing-data
+            claimName: syncthing-config
         - name: data
           persistentVolumeClaim:
             claimName: syncthing-data
-        - name: configd-config
-          secret:
-            secretName: syncthing-configd
