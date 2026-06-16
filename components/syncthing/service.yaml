@@ -3,23 +3,27 @@ kind: Service
 metadata:
   name: syncthing
 spec:
-  type: ClusterIP
+  type: NodePort
   selector:
     app: syncthing
   ports:
     - name: web
       port: 8384
+      nodePort: 30000
       targetPort: web
       protocol: TCP
     - name: sync-tcp
       port: 22000
+      nodePort: 30001
       targetPort: sync-tcp
       protocol: TCP
     - name: sync-udp
       port: 22000
+      nodePort: 30002
       targetPort: sync-udp
       protocol: UDP
     - name: discovery
       port: 21027
+      nodePort: 30003
       targetPort: discovery
       protocol: UDP
