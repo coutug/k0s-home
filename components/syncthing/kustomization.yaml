@@ -7,4 +7,4 @@ resources:
   - ns.yaml
   - pvc.yaml
   - deployment.yaml
-  - service.yaml
+  - svc.yaml
