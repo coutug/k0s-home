@@ -1,5 +1,5 @@
-# Deploys sops-secret, flux-operator and flux-instance
 #!/usr/bin/env bash
+# Deploys Gateway API CRDs, sops-secret, flux-operator and flux-instance
 set -Eeuo pipefail
 
 SCRIPT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
@@ -11,6 +11,7 @@ CHART="oci://ghcr.io/controlplaneio-fluxcd/charts/flux-operator"
 VALUES_FILE="flux-operator.yaml"
 SOPS_SECRET_FILE="sops-secret.yaml"
 FLUX_INSTANCE_FILE="flux-instance.yaml"
+GW_API_CRDS_FILE="gw-api-crds-v1.5.0.yaml"
 
 require_command() {
   local command_name="$1"
@@ -56,9 +57,12 @@ require_command kubectl
 require_file "${VALUES_FILE}"
 require_file "${SOPS_SECRET_FILE}"
 require_file "${FLUX_INSTANCE_FILE}"
+require_file "${GW_API_CRDS_FILE}"
 
 current_context="$(kubectl config current-context)"
 confirm_context "${current_context}"
+
+kubectl apply --server-side --filename "${GW_API_CRDS_FILE}"
 
 helm upgrade --install "${RELEASE_NAME}" "${CHART}" \
   --namespace "${NAMESPACE}" \
@@ -68,4 +72,4 @@ helm upgrade --install "${RELEASE_NAME}" "${CHART}" \
   --values "${VALUES_FILE}"
 
 sops --decrypt "${SOPS_SECRET_FILE}" | kubectl apply --namespace "${NAMESPACE}" --filename -
-kubectl apply --namespace "${NAMESPACE}" --filename "${FLUX_INSTANCE_FILE}"
+kubectl apply --server-side --namespace "${NAMESPACE}" --filename "${FLUX_INSTANCE_FILE}"
