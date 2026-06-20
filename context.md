@@ -16,20 +16,27 @@
 
 ## Components
 - `components/network`: Cilium LoadBalancer IPAM and L2 announcement policy for tailnet-facing services.
+- `components/gateway`: Cilium Gateway API Gateway for tailnet HTTP/TCP exposure.
 - `components/storage`: Rancher local-path-provisioner deployed by Flux HelmRelease.
 - `components/monitoring`: VictoriaMetrics Kubernetes stack deployed by Flux HelmRelease.
-- `components/syncthing`: Syncthing deployment, PVCs, and LoadBalancer service.
-- `components/jellyfin`: Jellyfin deployment, PVCs, and LoadBalancer service.
-- `components/hermes`: Hermes gateway/dashboard deployment, PVC, generated env secret, and LoadBalancer service.
+- `components/syncthing`: Syncthing deployment, PVCs, ClusterIP service, HTTPRoute, and TCPRoute.
+- `components/jellyfin`: Jellyfin deployment, PVCs, ClusterIP service, and HTTPRoute.
+- `components/hermes`: Hermes gateway/dashboard deployment, PVC, generated env secret, ClusterIP service, and HTTPRoute.
 
 ## Network
 Tailscale is installed on each machine. I want services running in the clusters to be accessible from my laptop and desktop at any time.
 
 ### Tailnet LoadBalancer exposure
-- Tailnet-facing Kubernetes services use:
+- Tailnet-facing Kubernetes LoadBalancer services use:
   - `type: LoadBalancer`
   - label `exposure: tailnet`
   - annotation `lbipam.cilium.io/ips` for deterministic IP assignment.
+- HTTP/TCP application exposure is consolidated behind the Cilium Gateway API Gateway:
+  - namespace/name: `gateway/tailnet`
+  - GatewayClass: `cilium`
+  - address: `10.250.0.14`
+  - HTTP listener: TCP `80`, hostname `*.home`
+  - Syncthing sync listener: TCP `22000`
 - Cilium IP pool:
   - name: `tailnet-lb-pool`
   - range: `10.250.0.10-10.250.0.50`
@@ -39,15 +46,11 @@ Tailscale is installed on each machine. I want services running in the clusters 
   - announces LoadBalancer IPs for selected services.
 
 ### Assigned service IPs
-- Syncthing: `10.250.0.11`
-  - Web UI: TCP `8384`
-  - Sync: TCP/UDP `22000`
-  - Discovery: UDP `21027`
-- Jellyfin: `10.250.0.12`
-  - Web: TCP `8096`
-- Hermes: `10.250.0.13`
-  - Gateway: TCP `8642`
-  - Dashboard: TCP `9119`
+- Cilium Gateway API Gateway: `10.250.0.14`
+  - Jellyfin: `http://jellyfin.home/` -> service `jellyfin:8096`
+  - Syncthing dashboard: `http://syncthing.home/dash` -> service `syncthing:8384`
+  - Syncthing sync: `syncthing.home:22000` -> service `syncthing:22000/TCP`
+  - Hermes dashboard: `http://hermes.home/dash` -> service `hermes:9119`
 
 ### Tailscale routing model
 - Cluster nodes must be able to reach `10.250.0.0/24` LoadBalancer IPs locally.
