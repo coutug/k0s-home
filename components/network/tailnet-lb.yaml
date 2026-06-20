@@ -1,0 +1,21 @@
+apiVersion: cilium.io/v2alpha1
+kind: CiliumL2AnnouncementPolicy
+metadata:
+  name: tailnet-lb
+spec:
+  serviceSelector:
+    matchLabels:
+      exposure: tailnet
+  loadBalancerIPs: true
+---
+apiVersion: cilium.io/v2
+kind: CiliumLoadBalancerIPPool
+metadata:
+  name: tailnet-lb-pool
+spec:
+  blocks:
+    - start: 10.250.0.10
+      stop: 10.250.0.50
+  serviceSelector:
+    matchLabels:
+      exposure: tailnet
