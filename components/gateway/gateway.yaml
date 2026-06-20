@@ -1,0 +1,44 @@
+apiVersion: gateway.networking.k8s.io/v1
+kind: Gateway
+metadata:
+  name: tailnet
+  namespace: gateway
+spec:
+  gatewayClassName: cilium
+  addresses:
+    - type: IPAddress
+      value: 10.250.0.14
+  infrastructure:
+    labels:
+      exposure: tailnet
+  listeners:
+    - name: http
+      protocol: HTTP
+      port: 80
+      hostname: "*.home"
+      allowedRoutes:
+        namespaces:
+          from: Selector
+          selector:
+            matchExpressions:
+              - key: kubernetes.io/metadata.name
+                operator: In
+                values:
+                  - syncthing
+                  - hermes
+        kinds:
+          - kind: HTTPRoute
+    - name: syncthing-sync-tcp
+      protocol: TCP
+      port: 22000
+      allowedRoutes:
+        namespaces:
+          from: Selector
+          selector:
+            matchExpressions:
+              - key: kubernetes.io/metadata.name
+                operator: In
+                values:
+                  - syncthing
+        kinds:
+          - kind: TCPRoute
