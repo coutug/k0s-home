@@ -18,14 +18,7 @@ spec:
       hostname: "*.home"
       allowedRoutes:
         namespaces:
-          from: Selector
-          selector:
-            matchExpressions:
-              - key: kubernetes.io/metadata.name
-                operator: In
-                values:
-                  - syncthing
-                  - hermes
+          from: ALL
         kinds:
           - kind: HTTPRoute
     - name: syncthing-tcp
@@ -33,12 +26,6 @@ spec:
       port: 22000
       allowedRoutes:
         namespaces:
-          from: Selector
-          selector:
-            matchExpressions:
-              - key: kubernetes.io/metadata.name
-                operator: In
-                values:
-                  - syncthing
+          from: ALL
         kinds:
           - kind: TCPRoute
