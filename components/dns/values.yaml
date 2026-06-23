@@ -1,0 +1,50 @@
+replicaCount: 2
+
+serviceType: LoadBalancer
+
+service:
+  name: coredns-home
+  annotations:
+    lbipam.cilium.io/ips: 10.250.0.15
+
+customLabels:
+  exposure: tailnet
+
+serviceAccount:
+  create: true
+rbac:
+  create: true
+
+# resources:
+#   requests:
+#     cpu: 25m
+#     memory: 64Mi
+#   limits:
+#     cpu: 250m
+#     memory: 128Mi
+
+servers:
+  - zones:
+      - zone: home
+        use_tcp: true
+    port: 1053
+    servicePort: 53
+    plugins:
+      - name: errors
+      - name: log
+      - name: health
+        parameters: :8080
+      - name: ready
+        parameters: :8181
+      - name: prometheus
+        parameters: 0.0.0.0:9153
+      - name: template
+        parameters: IN A home
+        configBlock: |-
+          match ^(.+)\.home\.$
+          answer "{{ .Name }} 300 IN A 10.250.0.14"
+      - name: template
+        parameters: IN ANY home
+        configBlock: |-
+          match ^(.+)\.home\.$
+          rcode NOERROR

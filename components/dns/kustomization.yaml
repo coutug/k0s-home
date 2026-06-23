@@ -5,6 +5,12 @@ namespace: dns
 
 resources:
   - ns.yaml
-  - configmap.yaml
-  - deployment.yaml
-  - svc.yaml
+  - coredns.yaml
+
+configMapGenerator:
+  - name: values-coredns-home
+    files:
+      - values.yaml
+
+configurations:
+  - kustomizeconfig.yaml
