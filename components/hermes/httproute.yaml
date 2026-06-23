@@ -6,7 +6,7 @@ spec:
   hostnames:
     - hermes.home
   parentRefs:
-    - name: tailnet
+    - name: cilium-gw
       namespace: gateway
       sectionName: http
   rules:

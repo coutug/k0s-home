@@ -28,7 +28,7 @@ spec:
                   - hermes
         kinds:
           - kind: HTTPRoute
-    - name: syncthing-sync-tcp
+    - name: syncthing-tcp
       protocol: TCP
       port: 22000
       allowedRoutes:
