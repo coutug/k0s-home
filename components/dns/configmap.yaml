@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: coredns-home
+data:
+  Corefile: |
+    home:1053 {
+        errors
+        log
+        health :8080
+        ready :8181
+        prometheus :9153
+
+        template IN A home {
+            match ^(.+)\.home\.$
+            answer "{{ .Name }} 300 IN A 10.250.0.14"
+        }
+
+        template IN ANY home {
+            match ^(.+)\.home\.$
+            rcode NOERROR
+        }
+    }
