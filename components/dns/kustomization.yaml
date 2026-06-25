@@ -5,7 +5,7 @@ namespace: dns
 
 resources:
   - ns.yaml
-  - coredns.yaml
+  # - coredns.yaml
 
 configMapGenerator:
   - name: values-coredns-home
