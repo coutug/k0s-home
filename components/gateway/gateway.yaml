@@ -18,7 +18,7 @@ spec:
       hostname: "*.home"
       allowedRoutes:
         namespaces:
-          from: ALL
+          from: All
         kinds:
           - kind: HTTPRoute
     - name: syncthing-tcp
@@ -26,6 +26,6 @@ spec:
       port: 22000
       allowedRoutes:
         namespaces:
-          from: ALL
+          from: All
         kinds:
           - kind: TCPRoute
