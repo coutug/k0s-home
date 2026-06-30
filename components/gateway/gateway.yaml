@@ -8,9 +8,9 @@ spec:
   addresses:
     - type: IPAddress
       value: 10.250.0.14
-  infrastructure:
-    labels:
-      exposure: tailnet
+  # infrastructure:
+  #   labels:
+  #     exposure: tailnet
   listeners:
     - name: http
       protocol: HTTP

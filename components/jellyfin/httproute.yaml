@@ -8,7 +8,6 @@ spec:
   parentRefs:
     - name: cilium-gw
       namespace: gateway
-      sectionName: http
   rules:
     - matches:
         - path:
