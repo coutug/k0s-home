@@ -1,0 +1,22 @@
+apiVersion: gateway.networking.k8s.io/v1
+kind: Gateway
+metadata:
+  name: cilium-gw-tcp
+  namespace: gateway
+spec:
+  gatewayClassName: cilium
+  infrastructure:
+    labels:
+      exposure: tailnet
+  addresses:
+    - type: IPAddress
+      value: 10.250.0.21
+  listeners:
+    - name: tcp
+      protocol: TCP
+      port: 22000
+      allowedRoutes:
+        namespaces:
+          from: All
+        kinds:
+          - kind: TCPRoute

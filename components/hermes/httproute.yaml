@@ -6,14 +6,14 @@ spec:
   hostnames:
     - hermes.home
   parentRefs:
-    - name: cilium-gw
+    - name: cilium-gw-http
       namespace: gateway
       sectionName: http
   rules:
     - matches:
         - path:
             type: PathPrefix
-            value: /dash
+            value: /
       backendRefs:
         - name: hermes
           port: 9119

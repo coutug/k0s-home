@@ -6,7 +6,7 @@ spec:
   hostnames:
     - jellyfin.home
   parentRefs:
-    - name: cilium-gw
+    - name: cilium-gw-http
       namespace: gateway
   rules:
     - matches:

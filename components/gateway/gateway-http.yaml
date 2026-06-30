@@ -1,16 +1,16 @@
 apiVersion: gateway.networking.k8s.io/v1
 kind: Gateway
 metadata:
-  name: cilium-gw
+  name: cilium-gw-http
   namespace: gateway
 spec:
   gatewayClassName: cilium
+  infrastructure:
+    labels:
+      exposure: tailnet
   addresses:
     - type: IPAddress
-      value: 10.250.0.14
-  # infrastructure:
-  #   labels:
-  #     exposure: tailnet
+      value: 10.250.0.20
   listeners:
     - name: http
       protocol: HTTP
@@ -21,11 +21,3 @@ spec:
           from: All
         kinds:
           - kind: HTTPRoute
-    - name: syncthing-tcp
-      protocol: TCP
-      port: 22000
-      allowedRoutes:
-        namespaces:
-          from: All
-        kinds:
-          - kind: TCPRoute

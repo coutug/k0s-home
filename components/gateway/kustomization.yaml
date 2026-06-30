@@ -3,4 +3,5 @@ kind: Kustomization
 
 resources:
   - ns.yaml
-  - gateway.yaml
+  - gateway-http.yaml
+  - gateway-tcp.yaml

@@ -5,7 +5,7 @@ serviceType: LoadBalancer
 service:
   name: coredns-home
   annotations:
-    lbipam.cilium.io/ips: 10.250.0.15
+    lbipam.cilium.io/ips: 10.250.0.30
 
 customLabels:
   exposure: tailnet
@@ -14,14 +14,6 @@ serviceAccount:
   create: true
 rbac:
   create: true
-
-# resources:
-#   requests:
-#     cpu: 25m
-#     memory: 64Mi
-#   limits:
-#     cpu: 250m
-#     memory: 128Mi
 
 servers:
   - zones:
@@ -39,11 +31,16 @@ servers:
         parameters: :8181
       - name: prometheus
         parameters: 0.0.0.0:9153
+      - name: hosts
+        configBlock: |-
+          10.250.0.21 syncthing.home
+          ttl 300
+          fallthrough
       - name: template
         parameters: IN A home
         configBlock: |-
           match ^([a-z0-9-]+)\.home\.$
-          answer "{{ .Name }} 300 IN A 10.250.0.14"
+          answer "{{ .Name }} 300 IN A 10.250.0.20"
       - name: template
         parameters: IN ANY home
         configBlock: |-
