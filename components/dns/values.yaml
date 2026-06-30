@@ -32,6 +32,7 @@ servers:
     plugins:
       - name: errors
       - name: log
+      - name: reload
       - name: health
         parameters: :8080
       - name: ready
@@ -41,10 +42,10 @@ servers:
       - name: template
         parameters: IN A home
         configBlock: |-
-          match ^(.+)\.home\.$
+          match ^([a-z0-9-]+)\.home\.$
           answer "{{ .Name }} 300 IN A 10.250.0.14"
       - name: template
         parameters: IN ANY home
         configBlock: |-
-          match ^(.+)\.home\.$
+          match ^([a-z0-9-]+)\.home\.$
           rcode NOERROR
