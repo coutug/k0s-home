@@ -3,11 +3,12 @@ kind: Service
 metadata:
   name: jellyfin
 spec:
-  type: ClusterIP
+  type: NodePort
   selector:
     app: jellyfin
   ports:
     - name: web
       port: 8096
+      nodePort: 30004
       targetPort: web
       protocol: TCP
