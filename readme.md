@@ -1,4 +1,4 @@
-# K0s Homw
+# K0s Home
 
 ## Cluster
 Configurations for home k0s cluster. `cluster/` folder contains 2 files deployed manualy:
